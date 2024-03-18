@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping\Index;
  * NOTE: Префикс в БД d_ указывает на принадлежность к справочникам.
  */
 #[ORM\Entity(repositoryClass: CountryTaxRepository::class)]
-#[ORM\Table(name: 'd_countries_tax')]
+#[ORM\Table(name: "d_countries_tax")]
 #[Index(name: "d_countries_tax_rate_format_idx", columns: ["tax_rate", "vat_format"])]
 class CountryTax
 {

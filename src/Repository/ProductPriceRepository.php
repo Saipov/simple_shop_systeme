@@ -21,6 +21,18 @@ class ProductPriceRepository extends ServiceEntityRepository
         parent::__construct($registry, ProductPrice::class);
     }
 
+
+    public function findPriceProductById(int $productId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        return $qb->select('pp')
+            ->from($this->getClassName(), 'pp')
+            ->join('pp.product', 'p')
+            ->where('p.id = :id')
+            ->setParameter('id', $productId)
+            ->andWhere($qb->expr()->isNull('pp.archivedAt'))
+            ->getQuery()->getOneOrNullResult();
+    }
     //    /**
     //     * @return ProductPrice[] Returns an array of ProductPrice objects
     //     */

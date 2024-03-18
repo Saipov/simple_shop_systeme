@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 trait DeletedAtTrait
 {
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     protected \DateTimeImmutable $deletedAt;
 
     public function setDeletedAt(\DateTimeImmutable $deletedAt): static

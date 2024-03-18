@@ -4,7 +4,11 @@ namespace App\Repository;
 
 use App\Entity\CountryTax;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\AbstractQuery;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @extends ServiceEntityRepository<CountryTax>
@@ -21,6 +25,42 @@ class CountryTaxRepository extends ServiceEntityRepository
         parent::__construct($registry, CountryTax::class);
     }
 
+    /**
+     * @param string $code2
+     * @return bool|float|int|mixed|string|null
+     */
+    public function findTaxRateByCountryCode2(string $code2): mixed
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        return $qb->select('ct.taxRate')
+            ->from($this->getClassName(), 'ct')
+            ->join('ct.country', 'c')
+            ->where('c.code2 = :code2')
+            ->setParameter('code2', $code2)
+            ->andWhere($qb->expr()->isNull('ct.archivedAt'))
+            ->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @param string $code2
+     * @return bool|float|int|mixed|string|null
+     */
+    public function findVatFormatByCountryCode2(string $code2): mixed
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('ct.vatFormat')
+            ->from($this->getClassName(), 'ct')
+            ->join('ct.country', 'c')
+            ->where('c.code2 = :code2')
+            ->setParameter('code2', $code2)
+            ->andWhere($qb->expr()->isNull('ct.archivedAt'));
+
+        try {
+            return $qb->getQuery()->getSingleScalarResult();
+        } catch (NoResultException $exception) {
+            return null;
+        }
+    }
 //    /**
 //     * @return CountryTax[] Returns an array of CountryTax objects
 //     */

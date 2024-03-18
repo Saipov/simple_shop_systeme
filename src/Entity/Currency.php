@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping\Index;
  * NOTE: Префикс в БД d_ указывает на принадлежность к справочникам.
  */
 #[ORM\Entity(repositoryClass: CurrencyRepository::class)]
-#[ORM\Table(name: 'd_currencies')]
+#[ORM\Table(name: "d_currencies")]
 #[Index(name: "d_currencies_code_name_idx", columns: ["code", "name"])]
 class Currency
 {

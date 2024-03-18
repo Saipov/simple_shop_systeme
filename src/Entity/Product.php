@@ -20,7 +20,7 @@ use Doctrine\ORM\Mapping\Index;
  * - это нужно для отчетов, аналитики и т.п.
  */
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
-#[ORM\Table(name: 'products')]
+#[ORM\Table(name: "products")]
 #[Index(name: "products_name_idx", columns: ["name"])]
 class Product
 {
@@ -34,24 +34,24 @@ class Product
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->productPrices = new ArrayCollection();
-        $this->productDiscounts = new ArrayCollection();
         $this->productTransactions = new ArrayCollection();
+        $this->productDiscounts = new ArrayCollection();
     }
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::BOOLEAN, nullable: false, options: ['default' => false])]
-    private bool $is_active = false;
+    private bool $isActive = false;
 
     #[ORM\OneToMany(targetEntity: ProductPrice::class, mappedBy: 'product')]
     private Collection $productPrices;
 
-    #[ORM\OneToMany(targetEntity: ProductDiscount::class, mappedBy: 'product')]
-    private Collection $productDiscounts;
-
     #[ORM\OneToMany(targetEntity: ProductTransaction::class, mappedBy: 'product')]
     private Collection $productTransactions;
+
+    #[ORM\ManyToMany(targetEntity: ProductDiscount::class, mappedBy: 'products')]
+    private Collection $productDiscounts;
 
     public function getName(): ?string
     {
@@ -67,12 +67,12 @@ class Product
 
     public function isIsActive(): ?bool
     {
-        return $this->is_active;
+        return $this->isActive;
     }
 
-    public function setIsActive(bool $is_active): static
+    public function setIsActive(bool $isActive): static
     {
-        $this->is_active = $is_active;
+        $this->isActive = $isActive;
 
         return $this;
     }
@@ -108,36 +108,6 @@ class Product
     }
 
     /**
-     * @return Collection<int, ProductDiscount>
-     */
-    public function getProductDiscounts(): Collection
-    {
-        return $this->productDiscounts;
-    }
-
-    public function addProductDiscount(ProductDiscount $productDiscount): static
-    {
-        if (!$this->productDiscounts->contains($productDiscount)) {
-            $this->productDiscounts->add($productDiscount);
-            $productDiscount->setProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProductDiscount(ProductDiscount $productDiscount): static
-    {
-        if ($this->productDiscounts->removeElement($productDiscount)) {
-            // set the owning side to null (unless already changed)
-            if ($productDiscount->getProduct() === $this) {
-                $productDiscount->setProduct(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, ProductTransaction>
      */
     public function getProductTransactions(): Collection
@@ -162,6 +132,33 @@ class Product
             if ($productTransaction->getProduct() === $this) {
                 $productTransaction->setProduct(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductDiscount>
+     */
+    public function getProductDiscounts(): Collection
+    {
+        return $this->productDiscounts;
+    }
+
+    public function addProductDiscount(ProductDiscount $productDiscount): static
+    {
+        if (!$this->productDiscounts->contains($productDiscount)) {
+            $this->productDiscounts->add($productDiscount);
+            $productDiscount->addProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductDiscount(ProductDiscount $productDiscount): static
+    {
+        if ($this->productDiscounts->removeElement($productDiscount)) {
+            $productDiscount->removeProduct($this);
         }
 
         return $this;

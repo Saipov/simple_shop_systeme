@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\ProductDiscount;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @extends ServiceEntityRepository<ProductDiscount>
@@ -21,6 +22,19 @@ class ProductDiscountRepository extends ServiceEntityRepository
         parent::__construct($registry, ProductDiscount::class);
     }
 
+    public function findProductDiscount(string $couponCode)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        return $qb->select('pd')
+            ->from($this->getClassName(), 'pd')
+            ->andWhere('pd.couponCode = :coupon_code')
+            ->setParameter('coupon_code', $couponCode)
+            ->andWhere($qb->expr()->isNull('pd.archivedAt'))
+            ->andWhere($qb->expr()->isNull('pd.deletedAt'))
+            ->andWhere('pd.isActive = :active')
+            ->setParameter('active', true)
+            ->getQuery()->getOneOrNullResult();
+    }
     //    /**
     //     * @return ProductDiscount[] Returns an array of ProductDiscount objects
     //     */

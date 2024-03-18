@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 trait CreatedAtTrait
 {
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: false)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: false)]
     protected \DateTimeImmutable $createdAt;
 
     public function setCreatedAt(\DateTimeImmutable $createdAt): static

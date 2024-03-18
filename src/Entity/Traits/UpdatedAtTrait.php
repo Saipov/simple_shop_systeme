@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 trait UpdatedAtTrait
 {
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     protected \DateTimeImmutable $updatedAt;
 
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): static

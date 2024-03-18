@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping\Index;
  * NOTE: Будем предпологать, что пользователь может их добавлять через UI и есть SDK в коде
  */
 #[ORM\Entity(repositoryClass: PaymentProviderRepository::class)]
-#[ORM\Table(name: 'payment_providers')]
+#[ORM\Table(name: "payment_providers")]
 #[Index(name: "payment_providers_name_idx", columns: ["name"])]
 class PaymentProvider
 {
@@ -22,8 +22,12 @@ class PaymentProvider
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    /**
+     * @TODO: Нужно хешировать\шифровать
+     * @var string|null
+     */
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $api_key = null;
+    private ?string $apiKey = null;
 
     public function getName(): ?string
     {
@@ -39,12 +43,12 @@ class PaymentProvider
 
     public function getApiKey(): ?string
     {
-        return $this->api_key;
+        return $this->apiKey;
     }
 
-    public function setApiKey(string $api_key): static
+    public function setApiKey(string $apiKey): static
     {
-        $this->api_key = $api_key;
+        $this->apiKey = $apiKey;
 
         return $this;
     }

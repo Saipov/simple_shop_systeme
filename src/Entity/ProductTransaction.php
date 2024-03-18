@@ -31,7 +31,7 @@ class ProductTransaction
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?PaymentProvider $payment_provider = null;
+    private ?PaymentProvider $paymentProvider = null;
 
     public function __construct()
     {
@@ -64,12 +64,12 @@ class ProductTransaction
 
     public function getPaymentProvider(): ?PaymentProvider
     {
-        return $this->payment_provider;
+        return $this->paymentProvider;
     }
 
-    public function setPaymentProvider(?PaymentProvider $payment_provider): static
+    public function setPaymentProvider(?PaymentProvider $paymentProvider): static
     {
-        $this->payment_provider = $payment_provider;
+        $this->paymentProvider = $paymentProvider;
 
         return $this;
     }
