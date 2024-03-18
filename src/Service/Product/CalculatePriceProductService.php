@@ -10,33 +10,26 @@ use App\Helper\ProductHelper;
 use App\Service\Discount\DiscountProductService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Throwable;
 
 class CalculatePriceProductService
 {
-
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly DiscountProductService $discountProduct
-    )
-    {
+    ) {
     }
 
-    /**
-     * @param ProductRequestDto $dto
-     * @return int
-     */
     public function calculate(ProductRequestDto $dto): int
     {
         $product = $this->entityManager->getRepository(ProductPrice::class)->findPriceProductById($dto->getProduct());
 
-        if ($product === null) {
+        if (null === $product) {
             throw new NotFoundProductException();
         }
 
         // TODO: Нужно отделить расчет налога
         $taxRate = $this->getTaxRateByTaxNumber($dto->getTaxNumber());
-        $price =  $product->getPrice()->getAmount();
+        $price = $product->getPrice()->getAmount();
 
         if ($dto->getCouponCode()) {
             // TODO: Еще нужно валидировать принадлежность купона к продукту (есть связь ManyToMany)
@@ -44,22 +37,18 @@ class CalculatePriceProductService
             $price = $this->discountProduct->applyDiscount($price, $dto->getCouponCode());
         }
 
-        return ($price + ($price * $taxRate / 100));
+        return $price + ($price * $taxRate / 100);
     }
 
-
-    /**
-     * @param $taxNumber
-     * @return float
-     */
     private function getTaxRateByTaxNumber($taxNumber): float
     {
         try {
             $taxRate = $this->entityManager->getRepository(CountryTax::class)
                 ->findTaxRateByCountryCode2(ProductHelper::getCountryCodeByTax($taxNumber));
-            return (float)$taxRate;
-        } catch (Throwable) {
-            throw new BadRequestHttpException("Check the settings of the tax_rate directories");
+
+            return (float) $taxRate;
+        } catch (\Throwable) {
+            throw new BadRequestHttpException('Check the settings of the tax_rate directories');
         }
     }
 }

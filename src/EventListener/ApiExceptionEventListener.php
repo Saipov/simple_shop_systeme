@@ -22,12 +22,12 @@ class ApiExceptionEventListener
         if ($throwable instanceof HttpExceptionInterface) {
             $data = [
                 'status' => Response::HTTP_BAD_REQUEST, // 400 по условиям задачи
-                'message' => $throwable->getMessage()
+                'message' => $throwable->getMessage(),
             ];
         } else {
             $data = [
                 'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                'message' => $throwable->getMessage()
+                'message' => $throwable->getMessage(),
             ];
         }
         $event->setResponse(new JsonResponse($data));

@@ -16,16 +16,16 @@ use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
- * Сущность: "Купоны, дисконтная программа"
+ * Сущность: "Купоны, дисконтная программа".
  *
  * NOTE: Упрощенный вариант, без валидации старта дисконтной программы
  */
 #[ORM\Entity(repositoryClass: ProductDiscountRepository::class)]
-#[ORM\Table(name: "products_discount")]
-#[Index(name: "products_discount_idx", columns: ["coupon_code", "value"])]
+#[ORM\Table(name: 'products_discount')]
+#[Index(name: 'products_discount_idx', columns: ['coupon_code', 'value'])]
 #[UniqueConstraint(
-    name: "products_discount_coupon_code_unique_idx",
-    columns: ["coupon_code"]
+    name: 'products_discount_coupon_code_unique_idx',
+    columns: ['coupon_code']
 )]
 class ProductDiscount
 {

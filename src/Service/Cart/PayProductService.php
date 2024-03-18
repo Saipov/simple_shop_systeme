@@ -4,11 +4,9 @@ namespace App\Service\Cart;
 
 use App\Dto\ProductRequestDto;
 use App\Entity\PaymentProvider;
-
 use App\Exception\PaymentException;
 use App\Service\PaymentProvider\PaymentProvider as PaymentProviderService;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Psr\Log\LoggerInterface;
 
 class PayProductService
@@ -17,22 +15,17 @@ class PayProductService
         private readonly EntityManagerInterface $entityManager,
         private readonly PaymentProviderService $paymentProvider,
         private readonly LoggerInterface $logger
-    )
-    {
+    ) {
     }
 
     /**
-     * @param int $price
-     * @param ProductRequestDto $dto
-     * @return bool
      * @throws PaymentException
      * @throws \Doctrine\DBAL\Exception
      */
     public function paymentProduct(int $price, ProductRequestDto $dto): bool
     {
-
-        $paymentProcessor = $this->entityManager->getRepository(PaymentProvider::class)->findOneBy(["name" => $dto->getPaymentProcessor()]);
-        if ($paymentProcessor === null) {
+        $paymentProcessor = $this->entityManager->getRepository(PaymentProvider::class)->findOneBy(['name' => $dto->getPaymentProcessor()]);
+        if (null === $paymentProcessor) {
             PaymentException::unsupportedPaymentType($dto->getPaymentProcessor());
         }
 
@@ -44,11 +37,13 @@ class PayProductService
             $paymentProvider->pay($price);
             // TODO: Тут делаем запись в журнал Entity ProductTransaction
             $this->entityManager->getConnection()->commit();
+
             return true;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->entityManager->getConnection()->rollBack();
             // TODO: Логировать нужно в файл
             $this->logger->error("Pay Failed: {$e->getMessage()}");
+
             return false;
         }
     }

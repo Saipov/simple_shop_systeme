@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\ProductDiscount;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @extends ServiceEntityRepository<ProductDiscount>
@@ -25,6 +24,7 @@ class ProductDiscountRepository extends ServiceEntityRepository
     public function findProductDiscount(string $couponCode)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
+
         return $qb->select('pd')
             ->from($this->getClassName(), 'pd')
             ->andWhere('pd.couponCode = :coupon_code')

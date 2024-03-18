@@ -4,11 +4,8 @@ namespace App\Repository;
 
 use App\Entity\CountryTax;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\NoResultException;
-use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
-use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @extends ServiceEntityRepository<CountryTax>
@@ -26,12 +23,12 @@ class CountryTaxRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string $code2
      * @return bool|float|int|mixed|string|null
      */
     public function findTaxRateByCountryCode2(string $code2): mixed
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
+
         return $qb->select('ct.taxRate')
             ->from($this->getClassName(), 'ct')
             ->join('ct.country', 'c')
@@ -42,7 +39,6 @@ class CountryTaxRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string $code2
      * @return bool|float|int|mixed|string|null
      */
     public function findVatFormatByCountryCode2(string $code2): mixed
@@ -61,28 +57,28 @@ class CountryTaxRepository extends ServiceEntityRepository
             return null;
         }
     }
-//    /**
-//     * @return CountryTax[] Returns an array of CountryTax objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //    /**
+    //     * @return CountryTax[] Returns an array of CountryTax objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('c')
+    //            ->andWhere('c.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('c.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
-//    public function findOneBySomeField($value): ?CountryTax
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    public function findOneBySomeField($value): ?CountryTax
+    //    {
+    //        return $this->createQueryBuilder('c')
+    //            ->andWhere('c.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

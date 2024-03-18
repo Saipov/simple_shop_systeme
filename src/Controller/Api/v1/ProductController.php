@@ -10,21 +10,20 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route("/api/v1", "api_")]
+#[Route('/api/v1', 'api_')]
 class ProductController extends AbstractController
 {
-
     public function __construct(
         private readonly CalculatePriceProductService $calculatePriceProductService,
-    )
-    {
+    ) {
     }
 
-    #[Route('/calculate-price', name: 'app_product', methods: ["POST"])]
+    #[Route('/calculate-price', name: 'app_product', methods: ['POST'])]
     public function calculatePrice(#[MapRequestPayload] ProductRequestDto $dto): JsonResponse
     {
         // TODO: Нужно еще поля выводить (productName etc.), например через нормализатор и dto
         $price = $this->calculatePriceProductService->calculate($dto);
-        return $this->json(["totalPrice" => ProductHelper::formatMoney($price)]);
+
+        return $this->json(['totalPrice' => ProductHelper::formatMoney($price)]);
     }
 }

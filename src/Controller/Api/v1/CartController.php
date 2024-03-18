@@ -10,21 +10,21 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route("/api/v1", "api_")]
+#[Route('/api/v1', 'api_')]
 class CartController extends AbstractController
 {
     public function __construct(
         private readonly CalculatePriceProductService $calculatePriceProductService,
         private readonly PayProductService $payProductService
-    )
-    {
+    ) {
     }
 
-    #[Route('/purchase', name: 'app_cart', methods: ["POST"])]
+    #[Route('/purchase', name: 'app_cart', methods: ['POST'])]
     public function index(#[MapRequestPayload] ProductRequestDto $dto): JsonResponse
     {
         $price = $this->calculatePriceProductService->calculate($dto);
         $status = $this->payProductService->paymentProduct($price, $dto);
-        return $this->json(["payStatus" => $status]);
+
+        return $this->json(['payStatus' => $status]);
     }
 }

@@ -10,7 +10,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Сущность: "Журнал покупок"
+ * Сущность: "Журнал покупок".
  *
  * NOTE: Упрощенный вариант
  */

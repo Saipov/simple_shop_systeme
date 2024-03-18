@@ -14,17 +14,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
 
 /**
- * Сущность: "Товары"
+ * Сущность: "Товары".
  *
  * NOTE: Упрощенный вариант, без количества, складов и т.п. Применяем soft delete и отправку в архив
  * - это нужно для отчетов, аналитики и т.п.
  */
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
-#[ORM\Table(name: "products")]
-#[Index(name: "products_name_idx", columns: ["name"])]
+#[ORM\Table(name: 'products')]
+#[Index(name: 'products_name_idx', columns: ['name'])]
 class Product
 {
-
     use GeneratedIdTrait;
     use CreatedAtTrait;
     use ArchivedAtTrait;

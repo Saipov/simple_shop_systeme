@@ -21,10 +21,10 @@ class ProductPriceRepository extends ServiceEntityRepository
         parent::__construct($registry, ProductPrice::class);
     }
 
-
     public function findPriceProductById(int $productId)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
+
         return $qb->select('pp')
             ->from($this->getClassName(), 'pp')
             ->join('pp.product', 'p')

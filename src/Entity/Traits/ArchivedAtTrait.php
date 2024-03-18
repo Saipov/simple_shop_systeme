@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait ArchivedAtTrait
 {
-
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     protected \DateTimeImmutable $archivedAt;
 

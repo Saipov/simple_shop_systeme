@@ -8,13 +8,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
 
 /**
- * Сущность: "Платежные сервисы"
+ * Сущность: "Платежные сервисы".
  *
  * NOTE: Будем предпологать, что пользователь может их добавлять через UI и есть SDK в коде
  */
 #[ORM\Entity(repositoryClass: PaymentProviderRepository::class)]
-#[ORM\Table(name: "payment_providers")]
-#[Index(name: "payment_providers_name_idx", columns: ["name"])]
+#[ORM\Table(name: 'payment_providers')]
+#[Index(name: 'payment_providers_name_idx', columns: ['name'])]
 class PaymentProvider
 {
     use GeneratedIdTrait;
@@ -24,7 +24,6 @@ class PaymentProvider
 
     /**
      * @TODO: Нужно хешировать\шифровать
-     * @var string|null
      */
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $apiKey = null;

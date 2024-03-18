@@ -10,36 +10,34 @@ class CountryTaxFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-
         $countriesTax = [
             [
-                "ref" => "DE",
-                "tax" => 19,
-                "vatFormat" => "DEXXXXXXXXX"
+                'ref' => 'DE',
+                'tax' => 19,
+                'vatFormat' => 'DEXXXXXXXXX',
             ],
             [
-                "ref" => "IT",
-                "tax" => 22,
-                "vatFormat" => "ITXXXXXXXXXXX"
+                'ref' => 'IT',
+                'tax' => 22,
+                'vatFormat' => 'ITXXXXXXXXXXX',
             ],
             [
-                "ref" => "GR",
-                "tax" => 24,
-                "vatFormat" => "GRXXXXXXXXX"
+                'ref' => 'GR',
+                'tax' => 24,
+                'vatFormat' => 'GRXXXXXXXXX',
             ],
             [
-                "ref" => "FR",
-                "tax" => 20,
-                "vatFormat" => "FRYYXXXXXXXXX"
+                'ref' => 'FR',
+                'tax' => 20,
+                'vatFormat' => 'FRYYXXXXXXXXX',
             ],
         ];
 
-
         foreach ($countriesTax as $value) {
             $countryTax = new CountryTax();
-            $countryTax->setCountry($this->getReference($value["ref"]));
-            $countryTax->setTaxRate($value["tax"]);
-            $countryTax->setVatFormat($value["vatFormat"]);
+            $countryTax->setCountry($this->getReference($value['ref']));
+            $countryTax->setTaxRate($value['tax']);
+            $countryTax->setVatFormat($value['vatFormat']);
             $manager->persist($countryTax);
         }
 

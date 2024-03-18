@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Constraints\Type;
 class ProductRequestDto
 {
     public function __construct(
-
         #[Type('integer')]
         #[NotBlank(message: 'Product id is required field')]
         public readonly int $product,
@@ -31,6 +30,7 @@ class ProductRequestDto
     {
         return $this->product;
     }
+
     public function getTaxNumber(): string
     {
         return $this->taxNumber;

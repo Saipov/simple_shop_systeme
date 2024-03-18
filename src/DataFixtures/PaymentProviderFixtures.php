@@ -11,11 +11,11 @@ class PaymentProviderFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $paymentProvider1 = new PaymentProvider();
-        $paymentProvider1->setName("paypal");
+        $paymentProvider1->setName('paypal');
         $manager->persist($paymentProvider1);
 
         $paymentProvider1 = new PaymentProvider();
-        $paymentProvider1->setName("stripe");
+        $paymentProvider1->setName('stripe');
         $manager->persist($paymentProvider1);
 
         $manager->flush();

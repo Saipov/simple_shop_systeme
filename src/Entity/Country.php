@@ -12,8 +12,8 @@ use Doctrine\ORM\Mapping\Index;
  * NOTE: Префикс в БД d_ указывает на принадлежность к справочникам.
  */
 #[ORM\Entity(repositoryClass: CountryRepository::class)]
-#[ORM\Table(name: "d_countries")]
-#[Index(name: "d_countries_code2_name_idx", columns: ["code2", "name"])]
+#[ORM\Table(name: 'd_countries')]
+#[Index(name: 'd_countries_code2_name_idx', columns: ['code2', 'name'])]
 class Country
 {
     use GeneratedIdTrait;

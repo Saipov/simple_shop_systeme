@@ -5,8 +5,6 @@ namespace App\Exception;
 class PaymentException extends \Exception
 {
     /**
-     * @param string $message
-     * @return self
      * @throws PaymentException
      */
     public static function payException(string $message): self
@@ -15,8 +13,6 @@ class PaymentException extends \Exception
     }
 
     /**
-     * @param string $type
-     * @return self
      * @throws PaymentException
      */
     public static function unsupportedPaymentType(string $type): self

@@ -11,8 +11,6 @@ class PaymentProvider
     }
 
     /**
-     * @param string $paymentName
-     * @return PaymentProviderInterface
      * @throws PaymentException
      */
     public function getPaymentProvider(string $paymentName): PaymentProviderInterface
@@ -22,7 +20,6 @@ class PaymentProvider
             if ($paymentProvider->support($paymentName)) {
                 return $paymentProvider;
             }
-
         }
 
         PaymentException::unsupportedPaymentType($paymentName);

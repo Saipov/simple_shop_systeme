@@ -12,27 +12,27 @@ class ProductFixtures extends Fixture
     {
         $products = [
             [
-                "name" => "Apple iPhone",
-                "isActive" => true
+                'name' => 'Apple iPhone',
+                'isActive' => true,
             ],
             [
-                "name" => "Headphones",
-                "isActive" => true
+                'name' => 'Headphones',
+                'isActive' => true,
             ],
             [
-                "name" => "Сase",
-                "isActive" => true
+                'name' => 'Сase',
+                'isActive' => true,
             ],
         ];
 
         foreach ($products as $value) {
             $product = new Product();
-            $product->setName($value["name"]);
-            $product->setIsActive($value["isActive"]);
+            $product->setName($value['name']);
+            $product->setIsActive($value['isActive']);
             $manager->persist($product);
             $manager->flush();
 
-            $this->addReference($value["name"], $product);
+            $this->addReference($value['name'], $product);
         }
     }
 }

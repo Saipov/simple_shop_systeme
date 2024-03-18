@@ -11,17 +11,16 @@ use Doctrine\ORM\Mapping\Embedded;
 use Doctrine\ORM\Mapping\Index;
 
 /**
- * Сущность: "Цены товаров"
+ * Сущность: "Цены товаров".
  *
  * NOTE: Упрощенный вариант
  * TODO: Мы не должны удалять цены, как вариант нужно отлавливать события апдейта и создавать новую запись. Нужно для аналитики и отчетов
  */
 #[ORM\Entity(repositoryClass: ProductPriceRepository::class)]
 #[ORM\Table(name: 'products_price')]
-#[Index(name: "products_price_idx", columns: ["price"])]
+#[Index(name: 'products_price_idx', columns: ['price'])]
 class ProductPrice
 {
-
     use GeneratedIdTrait;
     use ArchivedAtTrait;
 

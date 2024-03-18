@@ -12,9 +12,9 @@ class TaxNumberValidator extends ConstraintValidator
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-    )
-    {
+    ) {
     }
+
     public function validate($value, Constraint $constraint): void
     {
         if (null === $value || '' === $value) {
@@ -28,10 +28,6 @@ class TaxNumberValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @param string $taxNumber
-     * @return bool
-     */
     private function isTaxNumberValid(string $taxNumber): bool
     {
         $vatFormat = $this->entityManager->getRepository(CountryTax::class)
@@ -39,18 +35,14 @@ class TaxNumberValidator extends ConstraintValidator
 
         $regex = $this->convertFormatToRegex($vatFormat);
 
-        return preg_match($regex, $taxNumber) === 1;
+        return 1 === preg_match($regex, $taxNumber);
     }
 
-    /**
-     * @param $format
-     * @return string
-     */
     private function convertFormatToRegex($format): string
     {
         $format = str_replace('X', '[0-9]', $format);
         $format = str_replace('Y', '[A-Za-z]', $format);
 
-        return "/^" . $format . "$/";
+        return '/^'.$format.'$/';
     }
 }

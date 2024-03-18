@@ -6,9 +6,9 @@ namespace App\Entity\Traits;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+
 trait DeletedAtTrait
 {
-
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     protected \DateTimeImmutable $deletedAt;
 

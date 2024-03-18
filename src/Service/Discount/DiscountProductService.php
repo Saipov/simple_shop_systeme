@@ -10,15 +10,9 @@ class DiscountProductService
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-    )
-    {
+    ) {
     }
 
-    /**
-     * @param int $price
-     * @param string $couponCode
-     * @return int
-     */
     public function applyDiscount(int $price, string $couponCode): int
     {
         $productDiscount = $this->getProductDiscount($couponCode);
@@ -27,17 +21,13 @@ class DiscountProductService
         return $discount->applyDiscount($price, $productDiscount->getValue());
     }
 
-    /**
-     * @param string $couponCode
-     * @return mixed
-     */
     private function getProductDiscount(string $couponCode): mixed
     {
         $productDiscount = $this->entityManager->getRepository(ProductDiscount::class)->findProductDiscount($couponCode);
 
-        if ($productDiscount === null) {
+        if (null === $productDiscount) {
             // TODO: Кастомные ошибки решил не делать
-            throw new BadRequestHttpException("Invalid discount coupon");
+            throw new BadRequestHttpException('Invalid discount coupon');
         }
 
         return $productDiscount;
