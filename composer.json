@@ -63,6 +63,40 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "setup": [
+            "composer run build",
+            "composer run up",
+            "composer run install-deps",
+            "composer run migrate",
+            "composer run fixtures"
+        ],
+        "up": [
+            "docker compose up -d"
+        ],
+        "build": [
+            "docker compose build"
+        ],
+        "install-deps": [
+            "docker exec -it simple_shop_systeme_php-fpm composer install -o"
+        ],
+        "migrate": [
+            "docker exec -it simple_shop_systeme_php-fpm bin/console doctrine:migration:migrate -n"
+        ],
+        "fixtures": [
+            "docker exec -it simple_shop_systeme_php-fpm bin/console doctrine:fixtures:load && sync"
+        ],
+        "logs": [
+            "docker compose logs -f"
+        ],
+        "cache-clear": [
+            "docker exec -t simple_shop_systeme_php-fpm bin/console cache:clear"
+        ],
+        "plist": [
+            "docker exec -it simple_shop_systeme_php-fpm bin/console doctrine:query:sql \"select id, name from products\""
+        ],
+        "clist": [
+            "docker exec -it simple_shop_systeme_php-fpm bin/console doctrine:query:sql \"select coupon_code, coupon_type from products_discount\""
         ]
     },
     "conflict": {

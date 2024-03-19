@@ -54,7 +54,6 @@ class ProductDiscountFixtures extends Fixture implements DependentFixtureInterfa
         foreach ($productsDiscount as $value) {
             $productDiscount = new ProductDiscount();
             $productDiscount->setCouponCode($value['couponCode']);
-            $productDiscount->setProduct($this->getReference($value['ref']));
 
             match ($value['couponType']) {
                 'PERCENT' => $productDiscount->setCouponType(ProductDiscountTypeEnum::PERCENT),

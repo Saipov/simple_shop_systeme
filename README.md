@@ -1,7 +1,17 @@
 ## Test task test-for-candidates
 
-### Getting start
-
+### Getting started
+```bash
+$ composer run setup
+```
+**Get product list**
+```bash
+$ composer run plist
+```
+**Get a list of coupons**
+```bash
+$ composer run clist
+```
 
 ### Calculate product price endpoint
 ```bash
